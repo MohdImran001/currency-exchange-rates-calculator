@@ -2,7 +2,7 @@ const errorTemplate = require('../views/error');
 const ratesTemplate = require('../views/rates-template');
 
 const api = axios.create({
-	baseURL: 'http://localhost:3000/api',
+	baseURL: 'https://spa-vanilla-js.herokuapp.com/api',
 	timeout: 5000
 });
 
