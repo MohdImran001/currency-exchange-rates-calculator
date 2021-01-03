@@ -8867,15 +8867,15 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-var errorTemplate = require('../views/error');
+var errorTemplate = require("../views/error");
 
-var ratesTemplate = require('../views/rates-template');
+var ratesTemplate = require("../views/rates-template");
 
 var api = axios.create({
-  baseURL: 'http://localhost:3000/api',
+  baseURL: "http://localhost:3000/api",
   timeout: 5000
 });
-var app = $('#app');
+var app = $("#app");
 
 var showError = function showError(error, app, error_template) {
   var title, message;
@@ -8884,12 +8884,12 @@ var showError = function showError(error, app, error_template) {
     title = error.response.data.title;
     message = error.response.data.message;
   } else {
-    title = 'Error';
-    message = 'Something Wrong Happened';
+    title = "Error";
+    message = "Something Wrong Happened";
   }
 
   var html = error_template({
-    color: 'red',
+    color: "red",
     title: title,
     message: message
   });
@@ -8905,13 +8905,13 @@ var getConversionResults = /*#__PURE__*/function () {
         switch (_context.prev = _context.next) {
           case 0:
             // Extract form data
-            from = $('#from').val();
-            to = $('#to').val();
-            amount = $('#amount').val(); // Send post data to Express(proxy) server
+            from = $("#from").val();
+            to = $("#to").val();
+            amount = $("#amount").val(); // Send post data to Express(proxy) server
 
             _context.prev = 3;
             _context.next = 6;
-            return api.post('/convert', {
+            return api.post("/convert", {
               from: from,
               to: to
             });
@@ -8920,7 +8920,7 @@ var getConversionResults = /*#__PURE__*/function () {
             response = _context.sent;
             rate = response.data.rate;
             result = rate * amount;
-            $('#result').html("".concat(to, " ").concat(result));
+            $("#result").html("".concat(to, " ").concat(result));
             _context.next = 16;
             break;
 
@@ -8932,7 +8932,7 @@ var getConversionResults = /*#__PURE__*/function () {
 
           case 16:
             _context.prev = 16;
-            $('#result-segment').removeClass('loading');
+            $("#result-segment").removeClass("loading");
             return _context.finish(16);
 
           case 19:
@@ -8950,11 +8950,11 @@ var getConversionResults = /*#__PURE__*/function () {
 
 
 var convertRatesHandler = function convertRatesHandler() {
-  if ($('.ui.form').form('is valid')) {
+  if ($(".ui.form").form("is valid")) {
     // hide error message
-    $('.ui.error.message').hide(); // Post to Express server
+    $(".ui.error.message").hide(); // Post to Express server
 
-    $('#result-segment').addClass('loading');
+    $("#result-segment").addClass("loading");
     getConversionResults(); // Prevent page from submitting to server
 
     return false;
@@ -8971,10 +8971,10 @@ var getHistoricalRates = /*#__PURE__*/function () {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
-            date = $('#date').val();
+            date = $("#date").val();
             _context2.prev = 1;
             _context2.next = 4;
-            return api.post('/historical', {
+            return api.post("/historical", {
               date: date
             });
 
@@ -8987,7 +8987,7 @@ var getHistoricalRates = /*#__PURE__*/function () {
               date: date,
               rates: rates
             });
-            $('#historical-table').html(html);
+            $("#historical-table").html(html);
             _context2.next = 16;
             break;
 
@@ -9000,7 +9000,7 @@ var getHistoricalRates = /*#__PURE__*/function () {
 
           case 16:
             _context2.prev = 16;
-            $('.segment').removeClass('loading');
+            $(".segment").removeClass("loading");
             return _context2.finish(16);
 
           case 19:
@@ -9018,11 +9018,11 @@ var getHistoricalRates = /*#__PURE__*/function () {
 
 
 var historicalRatesHandler = function historicalRatesHandler() {
-  if ($('.ui.form').form('is valid')) {
+  if ($(".ui.form").form("is valid")) {
     // hide error message
-    $('.ui.error.message').hide(); // Indicate loading status
+    $(".ui.error.message").hide(); // Indicate loading status
 
-    $('.segment').addClass('loading');
+    $(".segment").addClass("loading");
     getHistoricalRates(); // Prevent page from submitting to server
 
     return false;
@@ -9042,34 +9042,34 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-var errorTemplate = require('../views/error');
+var errorTemplate = require("../views/error");
 
-var ratesTemplate = require('../views/rates-template');
+var ratesTemplate = require("../views/rates-template");
 
-var exchangeTemplate = require('../views/exchange-template');
+var exchangeTemplate = require("../views/exchange-template");
 
-var historicalTemplate = require('../views/historical-template');
+var historicalTemplate = require("../views/historical-template");
 
-var _require = require('./util'),
+var _require = require("./util"),
     api = _require.api,
     showError = _require.showError,
     convertRatesHandler = _require.convertRatesHandler,
     historicalRatesHandler = _require.historicalRatesHandler;
 
-var app = $('#app');
+var app = $("#app");
 var router = new Router({
-  mode: 'history',
+  mode: "history",
   page404: function page404(path) {
     var error = Handlebars.compile(errorTemplate.html());
     var html = error({
-      color: 'yellow',
-      title: 'Error 404 - Page Not Found',
+      color: "yellow",
+      title: "Error 404 - Page Not Found",
       message: "The path /".concat(path, " doesnot exists")
     });
     app.html(html);
   }
 });
-router.add('/', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+router.add("/", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
   var rates_template, html, response, _response$data, base, date, rates, error_template;
 
   return regeneratorRuntime.wrap(function _callee$(_context) {
@@ -9083,39 +9083,40 @@ router.add('/', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.
 
           _context.prev = 3;
           _context.next = 6;
-          return api.get('/rates');
+          return api.get("/rates");
 
         case 6:
           response = _context.sent;
           _response$data = response.data, base = _response$data.base, date = _response$data.date, rates = _response$data.rates;
+          console.log(base, date, rates);
           html = rates_template({
             base: base,
             date: date,
             rates: rates
           });
           app.html(html);
-          _context.next = 16;
+          _context.next = 17;
           break;
 
-        case 12:
-          _context.prev = 12;
+        case 13:
+          _context.prev = 13;
           _context.t0 = _context["catch"](3);
           error_template = Handlebars.compile(errorTemplate.html());
           showError(_context.t0, app, error_template);
 
-        case 16:
-          _context.prev = 16;
-          $('.loading').removeClass('loading');
-          return _context.finish(16);
+        case 17:
+          _context.prev = 17;
+          $(".loading").removeClass("loading");
+          return _context.finish(17);
 
-        case 19:
+        case 20:
         case "end":
           return _context.stop();
       }
     }
-  }, _callee, null, [[3, 12, 16, 19]]);
+  }, _callee, null, [[3, 13, 17, 20]]);
 })));
-router.add('/exchange', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+router.add("/exchange", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
   var exchange_template, html, response, symbols, error_template;
   return regeneratorRuntime.wrap(function _callee2$(_context2) {
     while (1) {
@@ -9126,7 +9127,7 @@ router.add('/exchange', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regenerator
           app.html(html);
           _context2.prev = 3;
           _context2.next = 6;
-          return api.get('/symbols');
+          return api.get("/symbols");
 
         case 6:
           response = _context2.sent;
@@ -9135,17 +9136,17 @@ router.add('/exchange', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regenerator
             symbols: symbols
           });
           app.html(html);
-          $('.loading').removeClass('loading'); // Validate Form Inputs
+          $(".loading").removeClass("loading"); // Validate Form Inputs
 
-          $('.ui.form').form({
+          $(".ui.form").form({
             fields: {
-              from: 'empty',
-              to: 'empty',
-              amount: 'decimal'
+              from: "empty",
+              to: "empty",
+              amount: "decimal"
             }
           }); // Specify Submit Handler
 
-          $('.submit').click(convertRatesHandler);
+          $(".submit").click(convertRatesHandler);
           _context2.next = 19;
           break;
 
@@ -9162,7 +9163,7 @@ router.add('/exchange', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regenerator
     }
   }, _callee2, null, [[3, 15]]);
 })));
-router.add('/historical', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
+router.add("/historical", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
   var historical_template, html;
   return regeneratorRuntime.wrap(function _callee3$(_context3) {
     while (1) {
@@ -9172,22 +9173,22 @@ router.add('/historical', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regenerat
           html = historical_template();
           app.html(html); // Activate Date Picker
 
-          $('#calendar').calendar({
-            type: 'date',
+          $("#calendar").calendar({
+            type: "date",
             formatter: {
               //format date to yyyy-mm-dd
               date: function date(_date) {
-                return new Date(_date).toISOString().split('T')[0];
+                return new Date(_date).toISOString().split("T")[0];
               }
             }
           }); // Validate Date input
 
-          $('.ui.form').form({
+          $(".ui.form").form({
             fields: {
-              date: 'empty'
+              date: "empty"
             }
           });
-          $('.submit').click(historicalRatesHandler);
+          $(".submit").click(historicalRatesHandler);
 
         case 6:
         case "end":
@@ -9253,7 +9254,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46529" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56853" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

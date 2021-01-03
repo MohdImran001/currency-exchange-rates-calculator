@@ -8,8 +8,9 @@ const api = axios.create({
 
 module.exports = {
 	convertCurrency: async (from, to) => {
-		const response = await api.get(`/convert?q=${from}_${to}&compact=y&apiKey=${process.env.FREE_CURR_API_KEY}`);
-		const key = Object.keys(response.data)[0];
+		console.log(from, to, process.env.FREE_CURR_API_KEY);
+	    const response = await api.get(`/convert?q=${from}_${to}&compact=y&apiKey=${process.env.FREE_CURR_API_KEY}`);
+	    const key = Object.keys(response.data)[0];
 	    const { val } = response.data[key];
 	    return { rate: val };
 	}
